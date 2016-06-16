@@ -6,23 +6,34 @@ A Twilio REST API client
 
 This uses the twilio rest api documented here: https://www.twilio.com/docs/api/rest
 
+Add this to your dependencies:
+```
+[[twijlio "0.1.0-SNAPSHOT"]](https://clojars.org/twijlio)
+```
+
+Now you can use the library:
+```
+(ns myapp
+	(:require [twijlio :as tw]))
+```
+
 Send an SMS to (505) 555-1212 from your twilio number (888) 555-2211 with your coolest smiley face.
 
 ```clojure
-(send-message "+15055551212" "+18885552211" {:Body "Hey Buddy <(^_^<)"})
+(tw/send-message "+15055551212" "+18885552211" {:Body "Hey Buddy <(^_^<)"})
 ```
 
 Send an MMS to (101) 555-1212 from your twilio number (999) 555-1122 with a gif of your new AI.
 
 ```clojure
-(send-message "+11015551212" "+19995551122" 
+(tw/send-message "+11015551212" "+19995551122" 
 	{:MediaURL "https://i.imgur.com/vnvIZ.gif" :Body "Check out Tayne!"}
 ```
 
 Make a call to (202) 555-1212 from your twilio number (800) 555-2121 and [say hello](https://www.twilio.com/labs/twimlets/message).
 
 ```clojure
-(make-call "+12025551212" "+18004442121" 
+(tw/make-call "+12025551212" "+18004442121" 
 	{:Url "http://twimlets.com/message?Message%5B0%5D=Hello%2C%20World!&"})
 ```
 
