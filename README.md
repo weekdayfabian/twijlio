@@ -26,6 +26,9 @@ Make a call to (202) 555-1212 from your twilio number (800) 555-2121 and [say he
 	{:Url "http://twimlets.com/message?Message%5B0%5D=Hello%2C%20World!&"})
 ```
 
+## Thanks
+
+Heavily based on [rwillig/clj-dispatch.me](https://github.com/rwillig/clj-dispatch.me). Thanks Ray!
 
 ## License
 
