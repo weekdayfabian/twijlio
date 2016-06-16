@@ -6,17 +6,20 @@
                            get-headers 
                            post-headers 
                            auth-headers
-                           construct-url] 
+                           construct-url 
+                           with-account 
+                           with-target-sid] 
                    :as conf]))
 
 (def route-maps 
   {:accounts    {:route nil}
-   :messages    {:route "Messages"}
    :calls       {:route "Calls"} 
+   :conferences {:route "Conferences"} ;; TODO
+   :messages    {:route "Messages"}
+   :queues      {:route "Queues"} ;; TODO
    :recordings  {:route "Recordings"}})
 
-(defn twilio-get 
-  [entity extra-params] 
+(defn twilio-get [entity extra-params] 
   (let [target (:route (get route-maps entity))
         url (construct-url target (:id extra-params))
         payload (merge (get-headers) 
@@ -26,8 +29,7 @@
     (:body resp)))
 
 
-(defn twilio-post 
-  [entity extra-params] 
+(defn twilio-post [entity extra-params] 
    (let [target (:route (get route-maps entity)) 
          url (construct-url target (:id extra-params))
          payload (merge (post-headers) 
@@ -42,6 +44,9 @@
 (defn get-calls 
   ([] (get-calls {}))
   ([params] (twilio-get :calls {:query params})))
+
+(defn get-call [sid] 
+  (twilio-get :calls {:id sid}))
 
 (defn make-call [to from params]
   (twilio-post :calls {:form (merge {:to to :from from} params)}))
@@ -61,13 +66,29 @@
   ([] (get-messages {}))
   ([params] (twilio-get :messages {:query params})))
 
+(defn get-message [sid] 
+  (twilio-get :messages {:id sid}))
+
 ;----- recordings
 
 (defn get-recordings 
   ([] (get-recordings {}))
   ([params] (twilio-get :recordings {:query params})))
 
+(defn get-recording [sid] 
+  (twilio-get :recordings {:id sid}))
+
 ;----- accounts
 
-(defn get-account-info [] 
-  (twilio-get :accounts {}))
+(defn get-accounts 
+  ([] (get-accounts {}))
+  ([params] (with-target-sid "" (twilio-get :accounts {}))))
+
+(defn get-account [sid] 
+  (with-target-sid sid (twilio-get :accounts {})))
+
+(defn modify-account [sid params] 
+  (with-target-sid sid (twilio-post :accounts {:form params})))
+
+(defn create-subaccount [params] 
+  (twilio-post :accounts {:form params}))
