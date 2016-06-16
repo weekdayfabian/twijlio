@@ -19,7 +19,9 @@
                       (when resource (str "/" resource)) 
                       (when id ("/" id)) ".json")))
 
-(def capitalize-keys #(zipmap (map (comp keyword clojure.string/capitalize name) (keys %)) (vals %)))
+(defn my-capitalize [s] (str (clojure.string/capitalize (first s)) (subs s 1)))
+
+(def capitalize-keys #(zipmap (map (comp keyword my-capitalize name) (keys %)) (vals %)))
 
 (def base-headers #(assoc {} :accept :application/json :as :json :throw-entire-message? true))
 
