@@ -6,10 +6,7 @@ A Twilio REST API client
 
 This uses the twilio rest api documented here: https://www.twilio.com/docs/api/rest
 
-Add this to your dependencies:
-```
-[[twijlio "0.1.0-SNAPSHOT"]](https://clojars.org/twijlio)
-```
+Add this to your dependencies: [[twijlio "0.1.0-SNAPSHOT"]](https://clojars.org/twijlio)
 
 Now you can use the library:
 ```
