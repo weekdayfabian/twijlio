@@ -6,13 +6,7 @@ A Twilio REST API client
 
 This uses the twilio rest api documented here: https://www.twilio.com/docs/api/rest
 
-Add this to your dependencies: [[twijlio "0.1.0-SNAPSHOT"]](https://clojars.org/twijlio)
-
-Now you can use the library:
-```
-(ns myapp
-	(:require [twijlio :as tw]))
-```
+[![Clojars Project](https://img.shields.io/clojars/v/twijlio.svg)](https://clojars.org/twijlio)
 
 Send an SMS to (505) 555-1212 from your twilio number (888) 555-2211 with your coolest smiley face.
 
