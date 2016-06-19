@@ -73,7 +73,7 @@
 ;----- numbers
 
 (defn get-numbers 
-  ([] get-numbers {}) 
+  ([] (get-numbers {})) 
   ([params] (twilio-get :numbers {:query params})))
 
 (defn get-number [sid] 
