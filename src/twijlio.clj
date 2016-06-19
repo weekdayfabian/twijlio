@@ -8,7 +8,8 @@
                            auth-headers
                            construct-url 
                            with-account 
-                           with-target-sid] 
+                           with-target-sid
+                           capitalize-keys] 
                    :as conf]))
 
 (def route-maps 
@@ -24,7 +25,7 @@
   (let [target (:route (get route-maps entity))
         url (construct-url target (:id extra-params))
         payload (merge (get-headers) 
-                       {:query-params (:query extra-params)} 
+                       {:query-params (capitalize-keys (:query extra-params))} 
                        (auth-headers)) 
         resp (get-req url payload)] 
     (:body resp)))
@@ -34,8 +35,8 @@
    (let [target (:route (get route-maps entity)) 
          url (construct-url target (:id extra-params))
          payload (merge (post-headers) 
-                        (when (:form extra-params) {:form-params (conf/capitalize-keys (:form extra-params))}) 
-                        (when (:query extra-params) {:query-params (:query extra-params)}) 
+                        (when (:form extra-params) {:form-params (capitalize-keys (:form extra-params))}) 
+                        (when (:query extra-params) {:query-params (capitalize-keys (:query extra-params))}) 
                         (auth-headers)) 
          resp (post-req url payload)] 
      (:body resp)))
