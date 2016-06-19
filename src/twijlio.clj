@@ -12,13 +12,13 @@
                    :as conf]))
 
 (def route-maps 
-  {:accounts    {:route nil}
-   :calls       {:route "Calls"} 
-   :conferences {:route "Conferences"} ;; TODO
-   :messages    {:route "Messages"}
-   :numbers     {:route "IncomingPhoneNumbers"}
-   :queues      {:route "Queues"} ;; TODO
-   :recordings  {:route "Recordings"}})
+  {:accounts                {:route nil}
+   :calls                   {:route "Calls"} 
+   :conferences             {:route "Conferences"} ;; TODO
+   :messages                {:route "Messages"}
+   :incoming_phone_numbers  {:route "IncomingPhoneNumbers"}
+   :queues                  {:route "Queues"} ;; TODO
+   :recordings              {:route "Recordings"}})
 
 (defn twilio-get [entity extra-params] 
   (let [target (:route (get route-maps entity))
@@ -72,18 +72,18 @@
 
 ;----- numbers
 
-(defn get-numbers 
+(defn get-incoming-phone-numbers 
   ([] (get-numbers {})) 
-  ([params] (twilio-get :numbers {:query params})))
+  ([params] (twilio-get :incoming_phone_numbers {:query params})))
 
-(defn get-number [sid] 
-  (twilio-get :numbers {:id sid}))
+(defn get-incoming-phone-number [sid] 
+  (twilio-get :incoming_phone_numbers {:id sid}))
 
-(defn modify-number [sid params] 
-  (twilio-post :numbers {:id sid :form params}))
+(defn modify-incoming-phone-number [sid params] 
+  (twilio-post :incoming_phone_numbers {:id sid :form params}))
 
-(defn create-number [params] 
-  (twilio-post :numbers params))
+(defn create-incoming-phone-number [params] 
+  (twilio-post :incoming_phone_numbers params))
 
 ;----- recordings
 
