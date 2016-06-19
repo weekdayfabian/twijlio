@@ -73,7 +73,7 @@
 ;----- numbers
 
 (defn get-incoming-phone-numbers 
-  ([] (get-numbers {})) 
+  ([] (get-incoming-phone-numbers {})) 
   ([params] (twilio-get :incoming_phone_numbers {:query params})))
 
 (defn get-incoming-phone-number [sid] 
