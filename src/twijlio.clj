@@ -16,6 +16,7 @@
    :calls       {:route "Calls"} 
    :conferences {:route "Conferences"} ;; TODO
    :messages    {:route "Messages"}
+   :numbers     {:route "IncomingPhoneNumbers"}
    :queues      {:route "Queues"} ;; TODO
    :recordings  {:route "Recordings"}})
 
@@ -68,6 +69,21 @@
 
 (defn get-message [sid] 
   (twilio-get :messages {:id sid}))
+
+;----- numbers
+
+(defn get-numbers 
+  ([] get-numbers {}) 
+  ([params] (twilio-get :numbers {:query params})))
+
+(defn get-number [sid] 
+  (twilio-get :numbers {:id sid}))
+
+(defn modify-number [sid params] 
+  (twilio-post :numbers {:id sid :form params}))
+
+(defn create-number [params] 
+  (twilio-post :numbers params))
 
 ;----- recordings
 
