@@ -70,6 +70,11 @@
 (defn get-message [sid] 
   (twilio-get :messages {:id sid}))
 
+(defn get-messages-for-number [number] 
+  (merge 
+    (:messages (get-messages {:to number}))
+    (:messages (get-messages {:from number}))))
+
 ;----- numbers
 
 (defn get-incoming-phone-numbers 
