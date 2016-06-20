@@ -26,7 +26,7 @@
 
 (defmacro with-target-sid  [target-sid & body] `(binding  [auth (merge auth {:target ~target-sid})]  (do ~@body)))
 
-(def set-account-auth! [sid token] (reset! auth {:account-sid sid :auth-token token}))
+(def set-account-auth! #(reset! auth {:account-sid %1 :auth-token %2}))
 
 (def my-capitalize #(str (clojure.string/capitalize (first %)) (subs % 1)))
 
