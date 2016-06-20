@@ -13,17 +13,17 @@
                    :as conf]))
 
 (def route-maps 
-  {:accounts                {:route nil}
-   :calls                   {:route "Calls"} 
-   :conferences             {:route "Conferences"} ;; TODO
-   :messages                {:route "Messages"}
-   :incoming_phone_numbers  {:route "IncomingPhoneNumbers"}
-   :queues                  {:route "Queues"} ;; TODO
-   :recordings              {:route "Recordings"}})
+  {:accounts                {:resource nil}
+   :calls                   {:resource "Calls"} 
+   :conferences             {:resource "Conferences"} ;; TODO
+   :media                   {:resource "Messages" :subresource "Media"}
+   :messages                {:resource "Messages"}
+   :incoming_phone_numbers  {:resource "IncomingPhoneNumbers"}
+   :queues                  {:resource "Queues"} ;; TODO
+   :recordings              {:resource "Recordings"}})
 
 (defn twilio-get [entity extra-params] 
-  (let [target (:route (get route-maps entity))
-        url (construct-url target (:id extra-params))
+  (let [url     (construct-url (get route-maps entity))
         payload (merge (get-headers) 
                        {:query-params (capitalize-keys (:query extra-params))} 
                        (auth-headers)) 
@@ -32,9 +32,8 @@
 
 
 (defn twilio-post [entity extra-params] 
-   (let [target (:route (get route-maps entity)) 
-         url (construct-url target (:id extra-params))
-         payload (merge (post-headers) 
+   (let [url      (construct-url (get route-maps entity))
+         payload  (merge (post-headers) 
                         (when (:form extra-params) {:form-params (capitalize-keys (:form extra-params))}) 
                         (when (:query extra-params) {:query-params (capitalize-keys (:query extra-params))}) 
                         (auth-headers)) 

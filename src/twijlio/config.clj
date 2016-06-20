@@ -13,19 +13,22 @@
 
 ;----- utility functions
 
-(defn construct-url 
-  ([resource id] (str base-url "/Accounts"
-                     (if (:target auth) 
-                       (when-not (empty? (:target auth)) (str "/" (:target auth)))
-                       (when (:account-sid auth) (str "/" (:account-sid auth)))) 
-                     (when resource (str "/" resource)) 
-                     (when id (str "/" id)) ".json")))
+(defn construct-url [res] 
+  (clojure.string/join "/" (remove clojure.string/blank? [base-url "Accounts"
+                                                          (or (:target auth) (:account-sid auth)) 
+                                                          (or (:resource res))
+                                                          (or (:id res))
+                                                          (or (:subresource res))
+                                                          (or (:subresource-id res))
+                                                          ".json"])))
 
 (defmacro with-account  [temp & body] `(binding  [auth ~temp]  (do ~@body)))
 
 (defmacro with-target-sid  [target-sid & body] `(binding  [auth (merge auth {:target ~target-sid})]  (do ~@body)))
 
-(defn my-capitalize [s] (str (clojure.string/capitalize (first s)) (subs s 1)))
+(def set-account-auth! [sid token] (reset! auth {:account-sid sid :auth-token token}))
+
+(def my-capitalize #(str (clojure.string/capitalize (first %)) (subs % 1)))
 
 (def capitalize-keys #(zipmap (map (comp keyword my-capitalize name) (keys %)) (vals %)))
 
