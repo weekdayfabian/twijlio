@@ -1,4 +1,4 @@
-(defproject twijlio "0.1.1-SNAPSHOT"
+(defproject twijlio "0.1.2-SNAPSHOT"
   :description "A REST API client for twilio"
   :url "http://github.com/weekdayfabian/twijlio"
   :license {:name "MIT License"
