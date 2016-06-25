@@ -29,7 +29,7 @@
 
 (defmacro with-target-sid  [target-sid & body] `(binding  [auth (merge auth {:target ~target-sid})]  (do ~@body)))
 
-(def set-account-auth! #(reset! auth {:account-sid %1 :auth-token %2}))
+(def set-account-auth! #(reset! auth %))
 
 (def twilio-keywords #(transform-keys ->PascalCaseKeywords %))
 

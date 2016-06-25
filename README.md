@@ -14,9 +14,9 @@ TWILIO_ACCOUNT_SID=AC...
 TWILIO_AUTH_TOKEN=5f4dcc3b5aa765d61d8327deb882cf99
 ```
 
-Set your auth credentials
-```
-(tw/set-account-auth! "AC..." "5f4dcc3b5aa765d61d8327deb882cf99")
+Or set your auth credentials:
+```clojure
+(tw/set-account-auth! {:account-sid "AC..." :auth-token "5f4dcc3b5aa765d61d8327deb882cf99"})
 ```
 
 Send an SMS to (505) 555-1212 from your twilio number (888) 555-2211 with your coolest smiley face.
@@ -40,14 +40,14 @@ Make a call to (202) 555-1212 from your twilio number (800) 555-2121 and [say he
 
 ## Advanced Usage
 
-Use different account
+Use different account temporarily
 ```clojure
-(tw/with-account t-sid t-auth (tw/make-call "+19005552121" "+13035551212"))
+(tw/with-account {:account-sid "AC..." :auth-token "5f4dcc3b5aa765d61d8327deb882cf99"} (tw/make-call "+19005552121" "+13035551212"))
 ```
 
 Get first media url from a message
 ```clojure
-(clojure.string/replace (first (:subresource_uris (tw/view-message sid))) #".json$" "")
+(clojure.string/replace (first (:subresource_uris (tw/get-message sid))) #".json$" "")
 ```
 
 ## Thanks
