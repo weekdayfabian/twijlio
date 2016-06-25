@@ -1,6 +1,8 @@
 (ns twijlio.config 
   (:require 
-    [clj-http.client :as client]))
+    [clj-http.client :as client]
+    [camel-snake-kebab.core   :refer :all]
+    [camel-snake-kebab.extras :refer [transform-keys]]))
 
 ;----- declarations
 
@@ -14,13 +16,14 @@
 ;----- utility functions
 
 (defn construct-url [res] 
-  (clojure.string/join "/" (remove clojure.string/blank? [base-url "Accounts"
-                                                          (or (:target auth) (:account-sid auth)) 
-                                                          (or (:resource res))
-                                                          (or (:id res))
-                                                          (or (:subresource res))
-                                                          (or (:subresource-id res))
-                                                          ".json"])))
+  (str (clojure.string/join "/" 
+    (remove clojure.string/blank? [base-url "Accounts"
+                                   (or (:target auth) (:account-sid auth)) 
+                                   (or (:resource res))
+                                   (or (:id res))
+                                   (or (:subresource res))
+                                   (or (:subresource-id res))]))
+       ".json"))
 
 (defmacro with-account  [temp & body] `(binding  [auth ~temp]  (do ~@body)))
 
@@ -28,9 +31,7 @@
 
 (def set-account-auth! #(reset! auth {:account-sid %1 :auth-token %2}))
 
-(def my-capitalize #(str (clojure.string/capitalize (first %)) (subs % 1)))
-
-(def capitalize-keys #(zipmap (map (comp keyword my-capitalize name) (keys %)) (vals %)))
+(def twilio-keywords #(transform-keys ->PascalCaseKeywords %))
 
 (def base-headers #(assoc {} :accept :application/json :as :json :throw-entire-message? true))
 

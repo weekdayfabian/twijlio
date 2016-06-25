@@ -7,4 +7,5 @@
             :key "mit"}
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [clj-http "3.1.0"] 
-                 [cheshire "5.6.1"]])
+                 [cheshire "5.6.1"] 
+                 [camel-snake-kebab "0.4.0"]])

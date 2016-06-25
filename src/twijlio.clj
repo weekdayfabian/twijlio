@@ -1,16 +1,17 @@
 (ns twijlio 
   (:require 
-    [clj-http.client :as client] 
-    [twijlio.config :refer [get-req 
-                           post-req 
-                           get-headers 
-                           post-headers 
-                           auth-headers
-                           construct-url 
-                           with-account 
-                           with-target-sid
-                           capitalize-keys] 
-                   :as conf]))
+    [clj-http.client          :as client]
+    [twijlio.config           :refer [get-req 
+                                      post-req 
+                                      get-headers 
+                                      post-headers 
+                                      auth-headers
+                                      construct-url 
+                                      with-account 
+                                      with-target-sid
+                                      twilio-keywords 
+                                      kebab-keywords] 
+                              :as conf]))
 
 (def route-maps 
   {:accounts                {:resource nil}
@@ -23,19 +24,19 @@
    :recordings              {:resource "Recordings"}})
 
 (defn twilio-get [entity extra-params] 
-  (let [url     (construct-url (get route-maps entity))
+  (let [url     (construct-url (into extra-params (get route-maps entity)))
         payload (merge (get-headers) 
-                       {:query-params (capitalize-keys (:query extra-params))} 
+                       {:query-params (twilio-keywords (:query extra-params))} 
                        (auth-headers)) 
-        resp (get-req url payload)] 
+        resp (get-req url payload)]
     (:body resp)))
 
 
 (defn twilio-post [entity extra-params] 
-   (let [url      (construct-url (get route-maps entity))
+   (let [url      (construct-url (into extra-params (get route-maps entity)))
          payload  (merge (post-headers) 
-                        (when (:form extra-params) {:form-params (capitalize-keys (:form extra-params))}) 
-                        (when (:query extra-params) {:query-params (capitalize-keys (:query extra-params))}) 
+                        (when (:form extra-params) {:form-params (twilio-keywords (:form extra-params))}) 
+                        (when (:query extra-params) {:query-params (twilio-keywords (:query extra-params))}) 
                         (auth-headers)) 
          resp (post-req url payload)] 
      (:body resp)))
