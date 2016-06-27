@@ -31,7 +31,7 @@
 
 (def set-account-auth! #(reset! auth %))
 
-(def twilio-keywords #(transform-keys ->PascalCaseKeywords %))
+(def twilio-keywords #(transform-keys ->PascalCaseKeyword %))
 
 (def base-headers #(assoc {} :accept :application/json :as :json :throw-entire-message? true))
 
