@@ -45,9 +45,9 @@ Use different account temporarily
 (tw/with-account {:account-sid "AC..." :auth-token "5f4dcc3b5aa765d61d8327deb882cf99"} (tw/make-call "+19005552121" "+13035551212"))
 ```
 
-Get first media url from a message
+Operate on a subaccount
 ```clojure
-(clojure.string/replace (first (:subresource_uris (tw/get-message sid))) #".json$" "")
+(tw/with-target-sid "AC12345678901234567890123456789012" (get-calls))
 ```
 
 ## Thanks
